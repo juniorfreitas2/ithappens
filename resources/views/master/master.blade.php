@@ -20,7 +20,7 @@
         @include('master.includes.sidebar')
     </div>
 
-        <div  class="content-wrapper">
+        <div  class="content-wrapper" style="padding: 20px">
             @yield('content')
         </div>
     <script src="{{asset('js/app.js')}}"></script>
