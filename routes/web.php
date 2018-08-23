@@ -18,4 +18,8 @@ Route::get('/', function () {
 Route::group(['prefix'=> 'ithappens'], function () {
 
     Route::resource('pedidos', 'PedidoController');
+    Route::get('pedidos/view/{id}', 'PedidoController@view');
+    Route::get('pedidos/adicionarproduto/{id}', 'PedidoController@addProduct');
+    Route::post('pedidos/adicionarproduto', 'PedidoController@storeProduct');
+
 });

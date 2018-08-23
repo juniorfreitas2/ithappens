@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ItemPedidoEstoque;
 use App\PedidoEstoque;
 use Illuminate\Http\Request;
 
@@ -44,7 +45,7 @@ class PedidoController extends Controller
                 return redirect()->back()->withInput()->withErrors(['error' => 'Erro ao cadastrar pedido']);
             }
 
-            return redirect(url("/ithappens/pedidos/{$pedido->ped_id}"));
+            return redirect(url("/ithappens/pedidos/view/{$pedido->ped_id}"));
         } catch (\Exception $e) {
             if (config('app.debug')) {
                 throw $e;
@@ -97,5 +98,52 @@ class PedidoController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function view($id)
+    {
+        $pedido = PedidoEstoque::find($id);
+
+        if (!$pedido) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Pedido não encontrado']);
+        }
+
+        return view('pedidos.view', compact('pedido'));
+    }
+
+    public function addProduct($id)
+    {
+        $pedido = PedidoEstoque::find($id);
+
+        if (!$pedido) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Pedido não encontrado']);
+        }
+
+        $produtos = $pedido->filial->produtos;
+
+        return view('pedidos.addproduto', compact('pedido', 'produtos'));
+
+    }
+
+    public function storeProduct(Request $request)
+    {
+        try {
+            $data = $request->all();
+
+            $itemPedido = ItemPedidoEstoque::create($data);
+
+            if (!$itemPedido) {
+                return redirect()->back()->withInput()->withErrors(['error' => 'Erro ao cadastrar item']);
+            }
+
+            return redirect(url("/ithappens/pedidos/view/{$itemPedido->ipe_ped_id}"));
+        } catch (\Exception $e) {
+            if (config('app.debug')) {
+                throw $e;
+            }
+
+            return redirect()->back()->withErrors(['exception' => 'Desculpe, ocorreu um erro interno']);
+        }
+
     }
 }

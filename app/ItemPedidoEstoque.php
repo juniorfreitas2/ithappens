@@ -9,7 +9,7 @@ class ItemPedidoEstoque extends Model
 
     protected $primaryKey = 'ipe_id';
 
-    protected $table = 'item_pedido_estoque';
+    protected $table = 'Item_pedido_estoque';
 
     public $timestamps = false;
 
@@ -20,6 +20,12 @@ class ItemPedidoEstoque extends Model
      */
     protected $fillable = [
         'ipe_ped_id',
-        'ipe_pro_id'
+        'ipe_pro_id',
+        'ipe_quantidade'
     ];
+
+    public function produto()
+    {
+        return $this->hasOne('App\Produto', 'pro_id', 'ipe_pro_id');
+    }
 }

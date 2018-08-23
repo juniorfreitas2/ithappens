@@ -19,6 +19,17 @@ class PedidoEstoque extends Model
      */
     protected $fillable = [
         'ped_descricao',
-        'ped_user_id'
+        'ped_user_id',
+        'ped_fil_id'
     ];
+
+    public function filial()
+    {
+        return $this->hasOne('App\Filial', 'fil_id', 'ped_fil_id');
+    }
+
+    public function itensPedido()
+    {
+        return $this->hasMany('App\ItemPedidoEstoque', 'ipe_ped_id', 'ped_id');
+    }
 }

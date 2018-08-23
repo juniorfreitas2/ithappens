@@ -19,4 +19,9 @@ class Filial extends Model
     protected $fillable = [
         'fil_nome'
     ];
+
+    public function produtos()
+    {
+        return $this->hasMany('App\Produto', 'pro_fil_id', 'fil_id');
+    }
 }
