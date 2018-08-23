@@ -9,12 +9,14 @@
                     <tr>
                         <th>Descrição</th>
                         <th>Usuário</th>
+                        <th>Filial</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>dsfs</td>
-                        <td>dsfs</td>
+                        <td>{{$pedido->ped_descricao}}</td>
+                        <td>{{$pedido->ped_user_id}}</td>
+                        <td>{{$pedido->filial->fil_nome}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -37,12 +39,16 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($pedido->itensPedido as $items)
-                    <tr>
-                        <td>{{$items->produto->pro_nome}}</td>
-                        <td>{{$items->ipe_quantidade}}</td>
-                    </tr>
-                @endforeach
+                @if(count($pedido->itensPedido ))
+                    @foreach($pedido->itensPedido as $items)
+                        <tr>
+                            <td>{{$items->produto->pro_nome}}</td>
+                            <td>{{$items->ipe_quantidade}}</td>
+                        </tr>
+                    @endforeach
+                @else
+                    <h3>Nenhum produto</h3>
+                @endif
                 </tbody>
             </table>
         </div>

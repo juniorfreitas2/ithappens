@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filial;
 use App\ItemPedidoEstoque;
 use App\PedidoEstoque;
 use Illuminate\Http\Request;
@@ -27,7 +28,9 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        return view('pedidos.create');
+        $filiais = Filial::all();
+
+        return view('pedidos.create', compact('filiais'));
     }
 
     /**

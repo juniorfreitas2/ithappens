@@ -4,6 +4,7 @@
 <h3>Lista de pedidos</h3>
 
 <div class="box box-warning">
+    <a href="{{url('ithappens/pedidos/create')}}" class="btn btn-info" style="float: right; margin: 10px">Novo</a>
     <div class="box-body" style="padding: 0px">
 
         <table class="table table-condensed table-bordered">
