@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\PedidoEstoque;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -34,7 +35,23 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $data = $request->all();
+
+            $pedido = PedidoEstoque::create($data);
+
+            if (!$pedido) {
+                return redirect()->back()->withInput()->withErrors(['error' => 'Erro ao cadastrar pedido']);
+            }
+
+            return redirect(url("/ithappens/pedidos/{$pedido->ped_id}"));
+        } catch (\Exception $e) {
+            if (config('app.debug')) {
+                throw $e;
+            }
+
+            return redirect()->back()->withErrors(['exception' => 'Desculpe, ocorreu um erro interno']);
+        }
     }
 
     /**
